@@ -2,7 +2,13 @@
 title: "Qbserve-data"
 author: "Avery Chan"
 date: "9/15/2021"
-output: html_document
+output:
+  html_document:
+    toc: false
+    toc_float: false
+    number_sections: false
+    # df_print: paged
+    code_folding: show
 ---
 
 ```{r setup, include=FALSE}
@@ -12,10 +18,50 @@ library(rjson)
 ```
 
 ```{r}
-p <- read_csv("2021-09-01_2021-10-01-project.csv")
-t <- read_csv("2021-09-01_2021-10-01-time.csv")
+# Import Data
+p <- read_csv("2021-09-01_2021-10-01-project.csv", col_types = cols())
+t <- read_csv("2021-09-01_2021-10-01-time.csv", col_types = cols())
 ts <- fromJSON("2021-09-01_2021-10-01-timesheet.json")
-as.data.frame(ts)
+```
+
+```{r}
+# We must manually decompose the data because it is not rectangular
+
+# fixes for knit errors
+# ts %>% getElement("history") %>% getElement("apps")
+# ts["history"]["apps"]
+
+apps <- ts["history"]["apps"] %>% as.data.frame()
+activities <- ts["history"]["activities"] %>% as.data.frame()
+log <- ts["history"]["log"] %>% as.data.frame()
+categories <- ts["history"]["categories"] %>% as.data.frame()
+projects <- ts["history"]["projects"] %>% as.data.frame()
+
+info <- ts["info"] %>% as.data.frame()
+
+distracting_duration <- ts["totals"]["distracting_duration"] %>% as.data.frame()
+activity_top <- ts["totals"]["activity_top"] %>% as.data.frame()
+neutral_duration <- ts["totals"]["neutral_duration"] %>% as.data.frame()
+category_top <- ts["totals"]["category_top"] %>% as.data.frame()
+productive_duration <- ts["totals"]["productive_duration"] %>%  as.data.frame()
+```
+
+```{r}
+# OLD
+
+# apps <- ts$history$apps %>% as.data.frame()
+# activities <- ts$history$activities %>% as.data.frame()
+# log <- ts$history$log %>% as.data.frame()
+# categories <- ts$history$categories %>% as.data.frame()
+# projects <- ts$history$projects %>% as.data.frame()
+# 
+# info <- ts$info %>% as.data.frame()
+# 
+# distracting_duration <- ts$totals$distracting_duration %>% as.data.frame()
+# activity_top <- ts$totals$activity_top %>% as.data.frame()
+# neutral_duration <- ts$totals$neutral_duration %>% as.data.frame()
+# category_top <- ts$totals$category_top %>% as.data.frame()
+# productive_duration <- ts$totals$productive_duration %>%  as.data.frame()
 ```
 
 
