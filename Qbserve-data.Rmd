@@ -1,0 +1,22 @@
+---
+title: "Qbserve-data"
+author: "Avery Chan"
+date: "9/15/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(rjson)
+```
+
+```{r}
+p <- read_csv("2021-09-01_2021-10-01-project.csv")
+t <- read_csv("2021-09-01_2021-10-01-time.csv")
+ts <- fromJSON("2021-09-01_2021-10-01-timesheet.json")
+as.data.frame(ts)
+```
+
+
+
