@@ -46,23 +46,5 @@ category_top <- ts["totals"]["category_top"] %>% as.data.frame()
 productive_duration <- ts["totals"]["productive_duration"] %>%  as.data.frame()
 ```
 
-```{r}
-# OLD
-
-# apps <- ts$history$apps %>% as.data.frame()
-# activities <- ts$history$activities %>% as.data.frame()
-# log <- ts$history$log %>% as.data.frame()
-# categories <- ts$history$categories %>% as.data.frame()
-# projects <- ts$history$projects %>% as.data.frame()
-# 
-# info <- ts$info %>% as.data.frame()
-# 
-# distracting_duration <- ts$totals$distracting_duration %>% as.data.frame()
-# activity_top <- ts$totals$activity_top %>% as.data.frame()
-# neutral_duration <- ts$totals$neutral_duration %>% as.data.frame()
-# category_top <- ts$totals$category_top %>% as.data.frame()
-# productive_duration <- ts$totals$productive_duration %>%  as.data.frame()
-```
-
 
 
