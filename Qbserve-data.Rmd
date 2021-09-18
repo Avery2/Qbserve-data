@@ -7,7 +7,7 @@ output:
     toc: false
     toc_float: false
     number_sections: false
-    # df_print: paged
+    df_print: paged
     code_folding: show
 ---
 
@@ -21,30 +21,69 @@ library(rjson)
 # Import Data
 p <- read_csv("2021-09-01_2021-10-01-project.csv", col_types = cols())
 t <- read_csv("2021-09-01_2021-10-01-time.csv", col_types = cols())
-ts <- fromJSON("2021-09-01_2021-10-01-timesheet.json")
+ts <- fromJSON(file = "2021-09-01_2021-10-01-timesheet.json")
 ```
 
 ```{r}
-# We must manually decompose the data because it is not rectangular
+# View(ts)
 
-# fixes for knit errors
-# ts %>% getElement("history") %>% getElement("apps")
-# ts["history"]["apps"]
+apps <- ts[["history"]][["apps"]] %>% tibble() %>% unnest_wider(col = ".")
 
-apps <- ts["history"]["apps"] %>% as.data.frame()
-activities <- ts["history"]["activities"] %>% as.data.frame()
-log <- ts["history"]["log"] %>% as.data.frame()
-categories <- ts["history"]["categories"] %>% as.data.frame()
-projects <- ts["history"]["projects"] %>% as.data.frame()
+activities <- ts[["history"]][["activities"]] %>% tibble() %>% unnest_wider(col = ".")
 
-info <- ts["info"] %>% as.data.frame()
+log <- ts[["history"]][["log"]] %>% tibble() %>% unnest_wider(col = ".")
 
-distracting_duration <- ts["totals"]["distracting_duration"] %>% as.data.frame()
-activity_top <- ts["totals"]["activity_top"] %>% as.data.frame()
-neutral_duration <- ts["totals"]["neutral_duration"] %>% as.data.frame()
-category_top <- ts["totals"]["category_top"] %>% as.data.frame()
-productive_duration <- ts["totals"]["productive_duration"] %>%  as.data.frame()
+categories <- ts[["history"]][["categories"]] %>% tibble %>% unnest_wider(col = ".")
+
+activity_top <- ts[["totals"]][["activity_top"]] %>% tibble() %>% unnest_wider(col = ".")
+category_top <- ts[["totals"]][["category_top"]] %>% tibble() %>% unnest_wider(col = ".")
+
+distracting_duration <- ts[["totals"]][["distracting_duration"]]
+neutral_duration <- ts[["totals"]][["neutral_duration"]]
+productive_duration <- ts[["totals"]][["productive_duration"]]
+
+durations <- tibble(
+  distracting_duration = distracting_duration,
+  neutral_duration = neutral_duration,
+  productive_duration = productive_duration
+)
 ```
+
+
+```{r}
+apps
+activities
+log
+categories
+activity_top
+category_top
+durations
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
