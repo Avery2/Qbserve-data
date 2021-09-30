@@ -4,9 +4,6 @@ author: "Avery Chan"
 date: "9/15/2021"
 output:
   html_document:
-    toc: false
-    toc_float: false
-    number_sections: false
     df_print: paged
     code_folding: show
 ---
